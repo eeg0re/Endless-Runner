@@ -5,10 +5,12 @@
 
 "use strict"
 
+let debugBool = true;
+
 let config = {
     type: Phaser.AUTO,
-    width: 960,
-    height: 800,
+    width: 480,
+    height: 320,
     scene: [ Load, Menu, Play, GameOver ],
     render: {
         pixelArt: true      
@@ -16,12 +18,13 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            debug: true
+            debug: debugBool
         }
-    }
+    },
+    zoom: 2
 }
 
-let game = new Phaser.Game(config)
+let game = new Phaser.Game(config);
 
-let cursors
-let { height, width } = game.config
+let cursors;
+let { height, width } = game.config;

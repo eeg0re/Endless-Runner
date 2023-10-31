@@ -20,6 +20,8 @@ class Load extends Phaser.Scene{
         });
 
         // load all other assets
+        this.load.path = './assets/';           // set the load path
+        this.load.image('mountains', 'mountains.png');
     }
 
     create(){
