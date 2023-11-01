@@ -25,7 +25,7 @@ class Load extends Phaser.Scene{
 
         // load atlas
         this.load.atlas('sprites', 'atlas.png', 'atlas.json');
-        
+
     }
 
     create(){
