@@ -15,7 +15,7 @@ class Play extends Phaser.Scene{
     }
 
     update(){
-        this.background1.tilePositionX -= 0.5;
+        this.background1.tilePositionX += 0.5;
     }
 
 }
