@@ -12,7 +12,6 @@ class Play extends Phaser.Scene{
         this.background1 = this.add.tileSprite(0,0, game.config.width, game.config.height, 'mountains');
         this.background1.setOrigin(0,0);
         this.sun = this.add.sprite(game.config.width/2, 20, 'sprites', 'sun');
-        //this.trees = this.add.tileSprite(0, 272, game.config.width*2, game.config.height/2, 'sprites', 'tree');
         this.dirtTiles = this.add.tileSprite(0, 320, game.config.width*2, 48, 'sprites', 'dirt');
         this.physics.add.existing(this.dirtTiles);
         this.dirtTiles.body.setSize(game.config.width*2, 35);
@@ -33,13 +32,12 @@ class Play extends Phaser.Scene{
             key: 'wiggle',
             frames: this.anims.generateFrameNames('sprites', {
                 prefix: 'Sammy',
-                //suffix: '.png',
                 start: 1,
                 end: 2,
                 zeroPad: 0,
             }),
             frameRate: 8,
-            repeat: -1,             // he will wiggle forever
+            repeat: -1,               // he will wiggle forever
         });
 
     }
