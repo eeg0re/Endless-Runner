@@ -70,25 +70,22 @@ class Play extends Phaser.Scene{
         this.dirtTiles.tilePositionX += 3;
 
         this.player.anims.play('wiggle', true);
-        //let playerVector = new Phaser.Math.Vector2(0, 0);
 
         if(this.cursors.left.isDown){
-            //playerVector.x = -1;
             this.player.body.setAccelerationX(-this.playerVelocity);
         }
         else if(this.cursors.right.isDown){
-            //playerVector.x += 1;
             this.player.body.setAccelerationX(this.playerVelocity);
         }
         else{
             this.player.body.setAccelerationX(0);
-            this.player.body.setDragX(this.DRAG)
+            this.player.body.setDragX(this.DRAG);
+        }
+
+        if(this.cursors.down.isDown){
+            debugBool = !debugBool;
         }
         
-
-        //playerVector.normalize();
-        //this.player.setVelocityX(this.playerVelocity+playerVector);
-
     }
 
 }
