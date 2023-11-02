@@ -8,6 +8,10 @@ class Play extends Phaser.Scene{
     }
 
     create(){
+        this.DRAG = 0.3;
+        // define cursors again
+        this.cursors = this.input.keyboard.createCursorKeys();
+
         // add background with parallax scroling
         this.background1 = this.add.tileSprite(0,0, game.config.width, game.config.height, 'mountains');
         this.background1.setOrigin(0,0);
@@ -20,8 +24,13 @@ class Play extends Phaser.Scene{
 
         // add player
         this.player = this.physics.add.sprite(20, 272, 'sprites', 'Sammy1');
+        // add physics to the player
         this.player.body.setCollideWorldBounds(true);
         this.player.setGravityY(200);
+        this.playerVelocity = 250;
+        //this.player.setDragX(0.05);
+        this.player.setDamping(true);
+        
 
         // add player/tile collision
         this.physics.add.collider(this.player, this.dirtTiles);
@@ -40,6 +49,19 @@ class Play extends Phaser.Scene{
             repeat: -1,               // he will wiggle forever
         });
 
+        // create the bird's flapping animation
+        this.anims.create({
+            key: 'flap',
+            frames: this.anims.generateFrameNames('sprites', {
+                prefix: 'bird',
+                start: 1,
+                end: 2,
+                zeroPad: 0
+            }),
+            frameRate: 6,
+            repeat: -1,
+        });1
+
     }
 
     update(){
@@ -48,6 +70,25 @@ class Play extends Phaser.Scene{
         this.dirtTiles.tilePositionX += 3;
 
         this.player.anims.play('wiggle', true);
+        //let playerVector = new Phaser.Math.Vector2(0, 0);
+
+        if(this.cursors.left.isDown){
+            //playerVector.x = -1;
+            this.player.body.setAccelerationX(-this.playerVelocity);
+        }
+        else if(this.cursors.right.isDown){
+            //playerVector.x += 1;
+            this.player.body.setAccelerationX(this.playerVelocity);
+        }
+        else{
+            this.player.body.setAccelerationX(0);
+            this.player.body.setDragX(this.DRAG)
+        }
+        
+
+        //playerVector.normalize();
+        //this.player.setVelocityX(this.playerVelocity+playerVector);
+
     }
 
 }

@@ -23,17 +23,18 @@ class Menu extends Phaser.Scene{
         this.add.text(game.config.width/12, game.config.height/4, 'Sammy Slug Forest Escape', menuConfig);
         this.add.text(game.config.width/7, game.config.height/2, 'Press space to start', menuConfig);
         this.cursors = this.input.keyboard.createCursorKeys();
-        
     }
 
     update(){
+        // press space to play the game
         if(this.cursors.space.isDown){
             this.scene.start('playScene');
         }
 
-        if(this.cursors.up.isDown){
+        // press up to view credits
+        // if(this.cursors.up.isDown){
 
-        }
+        // }
     }
 
 }
