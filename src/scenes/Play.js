@@ -8,7 +8,11 @@ class Play extends Phaser.Scene{
     }
 
     create(){
+        // define constants
         this.DRAG = 0.3;
+        this.JUMPVELOCITY = -700;
+        this.MAXJUMPS = 1;
+        this.physics.world.gravity.y = 2600;
         // define cursors again
         this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -22,6 +26,8 @@ class Play extends Phaser.Scene{
         this.physics.add.existing(this.dirtTiles);
         this.dirtTiles.body.setSize(game.config.width*2, 35);
         this.dirtTiles.body.setImmovable(true);
+        this.dirtTiles.body.setAllowGravity(false);
+
         
 
         // add player
@@ -86,8 +92,22 @@ class Play extends Phaser.Scene{
         }
 
         // handle jumping 
-        if(this.cursors.space.isDown){
-
+        // jumping code inspired/copied from Movement Studies repo: https://github.com/nathanaltice/MovementStudies/blob/master/scenes/VariableJump.js
+        this.player.isGrounded = this.player.body.touching.down;
+        if(this.player.isGrounded){
+            this.jumps = this.MAXJUMPS;
+            this.jumping = false;
+        }
+        else{ 
+            // this.player.anims.play('jump');
+        }
+        if(this.jumps > 0 && Phaser.Input.Keyboard.DownDuration(this.cursors.space, 150)){
+            this.player.body.velocity.y = this.JUMPVELOCITY;
+            this.jumping = true;
+        }
+        if(this.jumping && Phaser.Input.Keyboard.UpDuration(this.cursors.space, 50)){
+            this.jumps--;
+            this.jumping = false;
         }
 
         if(this.cursors.down.isDown){
