@@ -66,10 +66,12 @@ class Play extends Phaser.Scene{
     }
 
     update(){
+        // scroll tiles for parallax effect
         this.background1.tilePositionX += 0.5;
         this.trees.tilePositionX += 2;
         this.dirtTiles.tilePositionX += 3;
 
+        // play sammy's wiggle
         this.player.anims.play('wiggle', true);
 
         if(this.cursors.left.isDown){
@@ -83,7 +85,10 @@ class Play extends Phaser.Scene{
             this.player.body.setDragX(this.DRAG);
         }
 
-        if(this.cursors.space.isDown)
+        // handle jumping 
+        if(this.cursors.space.isDown){
+
+        }
 
         if(this.cursors.down.isDown){
             debugBool = !debugBool;
