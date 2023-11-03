@@ -15,6 +15,8 @@ class Play extends Phaser.Scene{
         // add background with parallax scroling
         this.background1 = this.add.tileSprite(0,0, game.config.width, game.config.height, 'mountains');
         this.background1.setOrigin(0,0);
+        this.trees = this.add.tileSprite(0, 224, game.config.width*2, 64, 'sprites', 'tree');
+        this.trees.scaleY = 3;
         this.sun = this.add.sprite(game.config.width/2, 20, 'sprites', 'sun');
         this.dirtTiles = this.add.tileSprite(0, 320, game.config.width*2, 48, 'sprites', 'dirt');
         this.physics.add.existing(this.dirtTiles);
@@ -28,7 +30,6 @@ class Play extends Phaser.Scene{
         this.player.body.setCollideWorldBounds(true);
         this.player.setGravityY(200);
         this.playerVelocity = 250;
-        //this.player.setDragX(0.05);
         this.player.setDamping(true);
         
 
@@ -66,7 +67,7 @@ class Play extends Phaser.Scene{
 
     update(){
         this.background1.tilePositionX += 0.5;
-        //this.trees.tilePositionX += 2;
+        this.trees.tilePositionX += 2;
         this.dirtTiles.tilePositionX += 3;
 
         this.player.anims.play('wiggle', true);
@@ -82,10 +83,12 @@ class Play extends Phaser.Scene{
             this.player.body.setDragX(this.DRAG);
         }
 
+        if(this.cursors.space.isDown)
+
         if(this.cursors.down.isDown){
             debugBool = !debugBool;
         }
-        
+
     }
 
 }
