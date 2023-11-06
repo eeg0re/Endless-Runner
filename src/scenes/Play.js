@@ -8,11 +8,17 @@ class Play extends Phaser.Scene{
     }
 
     create(){
+        // reset game parameters 
+        this.birdVelocity = -250; // start real easy
+        this.birdMaxVelocity = -1000;
+        let timer = 0;
+        
         // define constants
         this.DRAG = 0.3;
         this.JUMPVELOCITY = -700;
         this.MAXJUMPS = 1;
         this.physics.world.gravity.y = 2600;
+
         // define cursors again
         this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -28,7 +34,8 @@ class Play extends Phaser.Scene{
         this.dirtTiles.body.setImmovable(true);
         this.dirtTiles.body.setAllowGravity(false);
 
-        
+        // play background music
+
 
         // add player
         this.player = this.physics.add.sprite(20, 272, 'sprites', 'Sammy1');
@@ -37,7 +44,24 @@ class Play extends Phaser.Scene{
         this.player.setGravityY(200);
         this.playerVelocity = 250;
         this.player.setDamping(true);
+        this.player.destroyed = false;
+
+        // create a bird group
+        this.birdGroup = this.add.group({
+            runChildUpdate: true
+        });
+
+        // delay the bird spawn
+        this.time.delayedCall(4000, ()=> {
+            this.addBird();
+        });
         
+        this.difficultyTimer = this.time.addEvent({
+            delay: 1000,    // every second
+            callback: this.levelIncrease,
+            callbackScope: this,
+            loop: true
+        });
 
         // add player/tile collision
         this.physics.add.collider(this.player, this.dirtTiles);
@@ -56,19 +80,26 @@ class Play extends Phaser.Scene{
             repeat: -1,               // he will wiggle forever
         });
 
-        // create the bird's flapping animation
-        this.anims.create({
-            key: 'flap',
-            frames: this.anims.generateFrameNames('sprites', {
-                prefix: 'bird',
-                start: 1,
-                end: 2,
-                zeroPad: 0
-            }),
-            frameRate: 6,
-            repeat: -1,
-        });1
+        // // create the bird's flapping animation
+        // this.anims.create({
+        //     key: 'flap',
+        //     frames: this.anims.generateFrameNames('sprites', {
+        //         prefix: 'bird',
+        //         start: 1,
+        //         end: 2,
+        //         zeroPad: 0
+        //     }),
+        //     frameRate: 6,
+        //     repeat: -1,
+        // });
 
+    }
+
+    // addBird code based off addBarrier code from Paddle Parkour P3
+    addBird(){
+        let speedVariance = Phaser.Math.Between(0, 50);
+        let birb = new Bird(this, this.birdVelocity - speedVariance);
+        this.birdGroup.add(birb);
     }
 
     update(){
@@ -79,7 +110,7 @@ class Play extends Phaser.Scene{
 
         // play sammy's wiggle
         this.player.anims.play('wiggle', true);
-
+        //if(!this.player.destroyed){     // only check for input if the player hasn't lost
         if(this.cursors.left.isDown){
             this.player.body.setAccelerationX(-this.playerVelocity);
         }
@@ -90,9 +121,10 @@ class Play extends Phaser.Scene{
             this.player.body.setAccelerationX(0);
             this.player.body.setDragX(this.DRAG);
         }
+        //}
 
-        // handle jumping 
-        // jumping code inspired/copied from Movement Studies repo: https://github.com/nathanaltice/MovementStudies/blob/master/scenes/VariableJump.js
+            // handle jumping 
+            // jumping code inspired/copied from Movement Studies repo: https://github.com/nathanaltice/MovementStudies/blob/master/scenes/VariableJump.js
         this.player.isGrounded = this.player.body.touching.down;
         if(this.player.isGrounded){
             this.jumps = this.MAXJUMPS;
@@ -109,6 +141,7 @@ class Play extends Phaser.Scene{
             this.jumps--;
             this.jumping = false;
         }
+        
 
         if(this.cursors.down.isDown){
             debugBool = !debugBool;

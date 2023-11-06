@@ -5,7 +5,7 @@
 
 "use strict"
 
-let debugBool = false;
+let debugBool = true;
 
 let config = {
     type: Phaser.AUTO,
