@@ -11,7 +11,7 @@ class Play extends Phaser.Scene{
         // reset game parameters 
         this.birdVelocity = -250; // start real easy
         this.birdMaxVelocity = -1000;
-        let timer = 0;
+        this.timer = 0;
         
         // define constants
         this.DRAG = 0.3;
@@ -79,7 +79,9 @@ class Play extends Phaser.Scene{
             frameRate: 8,
             repeat: -1,               // he will wiggle forever
         });
-
+        
+        // play sammy's wiggle
+        this.player.anims.play('wiggle', true);
     }
 
     // addBird code based off addBarrier code from Paddle Parkour P3
@@ -95,8 +97,6 @@ class Play extends Phaser.Scene{
         this.trees.tilePositionX += 2;
         this.dirtTiles.tilePositionX += 3;
 
-        // play sammy's wiggle
-        this.player.anims.play('wiggle', true);
         if(!this.player.destroyed){     // only check for input if the player hasn't lost
             if(this.cursors.left.isDown){
                 this.player.body.setAccelerationX(-this.playerVelocity);
@@ -138,9 +138,9 @@ class Play extends Phaser.Scene{
     }
 
     levelIncrease(){
-        level++;
+        this.timer++;
 
-        if(level % 5 == 0){ // every 5 seconds increase speed by 50 pixels 
+        if(this.timer % 5 == 0){ // every 5 seconds increase speed by 50 pixels 
             if(this.birdVelocity >= this.birdMaxVelocity){
                 this.birdVelocity -= 50
             }
@@ -152,9 +152,11 @@ class Play extends Phaser.Scene{
         this.difficultyTimer.destroy();
         // play a death/game over sound
 
+        // play a death animation
+
         this.player.destroy();
 
-        this.time.delayedCall(4000, ()=> { this.scene.start('GameOverScene');});
+        this.time.delayedCall(2000, ()=> { this.scene.start('GameOverScene');});
     }
 
 }

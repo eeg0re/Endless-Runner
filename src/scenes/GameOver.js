@@ -8,7 +8,7 @@ class GameOver extends Phaser.Scene{
     }
 
     create(){
-
+        this.screen = this.add.tileSprite(0,0, game.config.width, game.config.height, 'gameOver').setOrigin(0,0);
     }
 
     update(){
