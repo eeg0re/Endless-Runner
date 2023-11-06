@@ -80,19 +80,6 @@ class Play extends Phaser.Scene{
             repeat: -1,               // he will wiggle forever
         });
 
-        // // create the bird's flapping animation
-        // this.anims.create({
-        //     key: 'flap',
-        //     frames: this.anims.generateFrameNames('sprites', {
-        //         prefix: 'bird',
-        //         start: 1,
-        //         end: 2,
-        //         zeroPad: 0
-        //     }),
-        //     frameRate: 6,
-        //     repeat: -1,
-        // });
-
     }
 
     // addBird code based off addBarrier code from Paddle Parkour P3
@@ -110,43 +97,64 @@ class Play extends Phaser.Scene{
 
         // play sammy's wiggle
         this.player.anims.play('wiggle', true);
-        //if(!this.player.destroyed){     // only check for input if the player hasn't lost
-        if(this.cursors.left.isDown){
-            this.player.body.setAccelerationX(-this.playerVelocity);
-        }
-        else if(this.cursors.right.isDown){
-            this.player.body.setAccelerationX(this.playerVelocity);
-        }
-        else{
-            this.player.body.setAccelerationX(0);
-            this.player.body.setDragX(this.DRAG);
-        }
-        //}
+        if(!this.player.destroyed){     // only check for input if the player hasn't lost
+            if(this.cursors.left.isDown){
+                this.player.body.setAccelerationX(-this.playerVelocity);
+            }
+            else if(this.cursors.right.isDown){
+                this.player.body.setAccelerationX(this.playerVelocity);
+            }
+            else{
+                this.player.body.setAccelerationX(0);
+                this.player.body.setDragX(this.DRAG);
+            }
 
             // handle jumping 
             // jumping code inspired/copied from Movement Studies repo: https://github.com/nathanaltice/MovementStudies/blob/master/scenes/VariableJump.js
-        this.player.isGrounded = this.player.body.touching.down;
-        if(this.player.isGrounded){
-            this.jumps = this.MAXJUMPS;
-            this.jumping = false;
+            this.player.isGrounded = this.player.body.touching.down;
+            if(this.player.isGrounded){
+                this.jumps = this.MAXJUMPS;
+                this.jumping = false;
+            }
+            else{ 
+                // this.player.anims.play('jump');
+            }
+            if(this.jumps > 0 && Phaser.Input.Keyboard.DownDuration(this.cursors.space, 150)){
+                this.player.body.velocity.y = this.JUMPVELOCITY;
+                this.jumping = true;
+            }
+            if(this.jumping && Phaser.Input.Keyboard.UpDuration(this.cursors.space, 50)){
+                this.jumps--;
+                this.jumping = false;
+            }
+
+            // check for slug/bird collisions
+            this.physics.world.collide(this.player, this.birdGroup, this.playerDeath, null, this);
         }
-        else{ 
-            // this.player.anims.play('jump');
-        }
-        if(this.jumps > 0 && Phaser.Input.Keyboard.DownDuration(this.cursors.space, 150)){
-            this.player.body.velocity.y = this.JUMPVELOCITY;
-            this.jumping = true;
-        }
-        if(this.jumping && Phaser.Input.Keyboard.UpDuration(this.cursors.space, 50)){
-            this.jumps--;
-            this.jumping = false;
-        }
-        
 
         if(this.cursors.down.isDown){
             debugBool = !debugBool;
         }
+    }
 
+    levelIncrease(){
+        level++;
+
+        if(level % 5 == 0){ // every 5 seconds increase speed by 50 pixels 
+            if(this.birdVelocity >= this.birdMaxVelocity){
+                this.birdVelocity -= 50
+            }
+        }
+    }
+
+    playerDeath(){
+        this.player.destroyed = true;
+        this.difficultyTimer.destroy();
+        // play a death/game over sound
+
+        this.player.destroy();
+
+        this.time.delayedCall(4000, ()=> { this.scene.start('GameOverScene');});
     }
 
 }
