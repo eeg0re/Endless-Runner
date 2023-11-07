@@ -28,6 +28,7 @@ class Menu extends Phaser.Scene{
     update(){
         // press space to play the game
         if(this.cursors.space.isDown){
+            this.sound.play('sfx-UI');
             this.scene.start('playScene');
         }
 

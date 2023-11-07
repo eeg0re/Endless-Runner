@@ -29,9 +29,11 @@ class GameOver extends Phaser.Scene{
 
     update(){
         if(this.cursors.space.isDown){
+            this.sound.play('sfx-UI');
             this.scene.start('playScene');
         }
         if(this.cursors.up.isDown){
+            this.sound.play('sfx-UI');
             this.scene.start('menuScene');
         }
     }

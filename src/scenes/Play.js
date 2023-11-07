@@ -71,7 +71,7 @@ class Play extends Phaser.Scene{
         });
         
         this.difficultyTimer = this.time.addEvent({
-            delay: 1000,    // every second
+            delay: 1000,                            // every second
             callback: this.timeIncrease,
             callbackScope: this,
             loop: true
@@ -98,6 +98,14 @@ class Play extends Phaser.Scene{
         
         // play sammy's wiggle
         this.player.anims.play('wiggle', true);
+
+        // play the song only if it isn't already playing
+        this.gameSong = this.sound.add('gameMusic');
+        this.gameSong.loop = true;
+        if(songIsPlaying == false){
+            songIsPlaying = true;
+            this.gameSong.play();
+        }
     }
 
     // addBird code based off addBarrier code from Paddle Parkour P3
@@ -129,30 +137,36 @@ class Play extends Phaser.Scene{
             // jumping code inspired/copied from Movement Studies repo: https://github.com/nathanaltice/MovementStudies/blob/master/scenes/VariableJump.js
             this.player.isGrounded = this.player.body.touching.down;
             if(this.player.isGrounded){
+                //this.player.anims.play('wiggle');
                 this.jumps = this.MAXJUMPS;
                 this.jumping = false;
+                //this.sound.play('sfx-jump');
             }
             else{ 
-                // this.player.anims.play('jump');
+                //this.player.anims.play('wiggle');
             }
             if(this.jumps > 0 && Phaser.Input.Keyboard.DownDuration(this.cursors.space, 150)){
+                //this.player.anims.play('jump');
                 this.player.body.velocity.y = this.JUMPVELOCITY;
                 this.jumping = true;
+                
             }
             if(this.jumping && Phaser.Input.Keyboard.UpDuration(this.cursors.space, 50)){
+                //this.player.anims.play('jump');
                 this.jumps--;
                 this.jumping = false;
             }
 
             // check for slug/bird collisions
             this.physics.world.collide(this.player, this.birdGroup, this.playerDeath, null, this);
+
+            if(this.player.x < -16){
+                this.playerDeath();
+            }
         }
+
 
         this.playerTime.text = `TIME: ${this.timer}`;
-
-        if(this.cursors.down.isDown){
-            debugBool = !debugBool;
-        }
     }
 
     timeIncrease(){
@@ -161,21 +175,23 @@ class Play extends Phaser.Scene{
 
             if(this.timer % 5 == 0){ // every 5 seconds increase speed by 50 pixels 
                 if(this.birdVelocity >= this.birdMaxVelocity){
-                    this.birdVelocity -= 50
+                    this.birdVelocity -= 50;
                 }
             }
-    }
+        }
     }
 
     playerDeath(){
         this.player.eaten = true;
         this.difficultyTimer.destroy();
         // play a death/game over sound
-
+        this.sound.play('sfx-ded');
         // play a death animation
-
+        this.player.anims.play('dead', true);
         this.player.destroy();
 
+        this.gameSong.stop();
+        songIsPlaying = false;
         this.time.delayedCall(2000, ()=> { this.scene.start('GameOverScene');});
     }
 

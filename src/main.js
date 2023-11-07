@@ -1,11 +1,13 @@
 // Igor Bessa
-// Title:
+// Title: Sammy Slug Forest Escape
 // Hours worked (approx):
 // Creative tilt: 
+// Credits: 
+// Play scene music is "8 Bit Surf" by David Renda on Fesliyan Studios, https://www.fesliyanstudios.com/royalty-free-music/downloads-c/8-bit-music/6
+// UI sound effect is by Lesiakower on Pixabay, https://pixabay.com/sound-effects/search/8-bit/
+// 
 
 "use strict"
-
-let debugBool = true;
 
 let config = {
     type: Phaser.AUTO,
@@ -18,7 +20,7 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            debug: debugBool
+            debug: false
         }
     },
     zoom: 2
@@ -28,3 +30,4 @@ let game = new Phaser.Game(config);
 
 let cursors;
 let { height, width } = game.config;
+let songIsPlaying = false;
