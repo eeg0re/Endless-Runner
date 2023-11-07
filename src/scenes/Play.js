@@ -14,7 +14,7 @@ class Play extends Phaser.Scene{
         this.timer = 0;
         
         // define constants
-        this.DRAG = 0.3;
+        this.DRAG = 0.1;
         this.JUMPVELOCITY = -700;
         this.MAXJUMPS = 1;
         this.physics.world.gravity.y = 2600;
@@ -34,6 +34,20 @@ class Play extends Phaser.Scene{
         this.dirtTiles.body.setImmovable(true);
         this.dirtTiles.body.setAllowGravity(false);
 
+        // display player's time
+        let timeConfig = {
+                fontFamily: 'Courier',
+                fontSize: '18px',
+                backgroundColor: '#36541d',
+                color: '#cadeba',
+                align: 'right',
+                padding: {
+                    top: 5,
+                    bottom: 5,
+                },
+        }
+        this.playerTime = this.add.text(10, 10, `TIME: ${this.timer}` , timeConfig);
+
         // play background music
 
 
@@ -44,7 +58,7 @@ class Play extends Phaser.Scene{
         this.player.setGravityY(200);
         this.playerVelocity = 250;
         this.player.setDamping(true);
-        this.player.destroyed = false;
+        this.player.eaten = false;
 
         // create a bird group
         this.birdGroup = this.add.group({
@@ -58,14 +72,16 @@ class Play extends Phaser.Scene{
         
         this.difficultyTimer = this.time.addEvent({
             delay: 1000,    // every second
-            callback: this.levelIncrease,
+            callback: this.timeIncrease,
             callbackScope: this,
             loop: true
         });
 
         // add player/tile collision
         this.physics.add.collider(this.player, this.dirtTiles);
-        
+
+        // adjust world bounds
+        this.physics.world.setBounds(0,0, this.background1.width, this.background1.height, false, true, true, true);
 
         // create sammy's wiggle animation
         this.anims.create({
@@ -97,7 +113,7 @@ class Play extends Phaser.Scene{
         this.trees.tilePositionX += 2;
         this.dirtTiles.tilePositionX += 3;
 
-        if(!this.player.destroyed){     // only check for input if the player hasn't lost
+        if(!this.player.eaten){     // only check for input if the player hasn't lost
             if(this.cursors.left.isDown){
                 this.player.body.setAccelerationX(-this.playerVelocity);
             }
@@ -132,23 +148,27 @@ class Play extends Phaser.Scene{
             this.physics.world.collide(this.player, this.birdGroup, this.playerDeath, null, this);
         }
 
+        this.playerTime.text = `TIME: ${this.timer}`;
+
         if(this.cursors.down.isDown){
             debugBool = !debugBool;
         }
     }
 
-    levelIncrease(){
-        this.timer++;
+    timeIncrease(){
+        if(!this.player.eaten){
+            this.timer++;
 
-        if(this.timer % 5 == 0){ // every 5 seconds increase speed by 50 pixels 
-            if(this.birdVelocity >= this.birdMaxVelocity){
-                this.birdVelocity -= 50
+            if(this.timer % 5 == 0){ // every 5 seconds increase speed by 50 pixels 
+                if(this.birdVelocity >= this.birdMaxVelocity){
+                    this.birdVelocity -= 50
+                }
             }
-        }
+    }
     }
 
     playerDeath(){
-        this.player.destroyed = true;
+        this.player.eaten = true;
         this.difficultyTimer.destroy();
         // play a death/game over sound
 
