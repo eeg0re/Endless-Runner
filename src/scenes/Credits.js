@@ -28,7 +28,7 @@ class Credits extends Phaser.Scene{
         this.add.text(10, 140, 'Jump sound effect by Pixabay,\nhttps://pixabay.com/sound-effects/search/8-bit%20jump/', creditConfig);
         this.add.text(10, 180, 'Menu scene music is "beam" by sinneschlösen on Pixabay,\nhttps://pixabay.com/music/search/8bit/', creditConfig);
 
-        this.add.text(10, 200, 'Press space to return', creditConfig);
+        this.add.text(10, 260, 'Press space to return', creditConfig);
 
     }
 
