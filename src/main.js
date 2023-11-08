@@ -2,6 +2,9 @@
 // Title: Sammy Slug Forest Escape
 // Hours worked (approx):
 // Creative tilt: 
+// I am particularly proud of the parallax scrolling effect I implemented as well as the rest of the pixel art 
+// that I created since I have never made pixel art before. Although it's all very simple, I think I did a good job
+// working within my limitations to creatively illustrate the feel of my game
 // Credits: 
 // Play scene music is "8 Bit Surf" by David Renda on Fesliyan Studios, https://www.fesliyanstudios.com/royalty-free-music/downloads-c/8-bit-music/6
 // UI sound effect is by Lesiakower on Pixabay, https://pixabay.com/sound-effects/search/8-bit/
