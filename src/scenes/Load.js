@@ -35,6 +35,19 @@ class Load extends Phaser.Scene{
     }
 
     create(){
+                // create sammy's wiggle animation
+        this.anims.create({
+                key: 'wiggle',
+                frames: this.anims.generateFrameNames('sprites', {
+                prefix: 'Sammy',
+                start: 1,
+                end: 2,
+                zeroPad: 0,
+            }),
+            frameRate: 8,
+            repeat: -1,               // he will wiggle forever
+        });
+
         this.anims.create({
             key: 'jump',
             frames: this.anims.generateFrameNames('sprites', {

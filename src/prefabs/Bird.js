@@ -1,7 +1,6 @@
 class Bird extends Phaser.GameObjects.Sprite{
     constructor(scene, velocity){
-        super(scene, game.config.width+32, Phaser.Math.Between(100, game.config.height-32), 'sprites', 'bird1');
-        //super(scene, game.config.width+32, 100, 'sprites', 'bird1')
+        super(scene, game.config.width+32, Phaser.Math.Between(150, game.config.height-32), 'sprites', 'bird1');
         // code for bird class inspired by barrier.js in PaddleParkourP3 repo:
         // https://github.com/nathanaltice/PaddleParkourP3/blob/master/src/prefabs/Barrier.js#L7C1-L7C1
         this.parentScene = scene;
@@ -18,6 +17,7 @@ class Bird extends Phaser.GameObjects.Sprite{
             frameRate: 6,
             repeat: -1,
         });
+
         // add object to existing scene
         this.parentScene.add.existing(this);
         this.parentScene.physics.add.existing(this);

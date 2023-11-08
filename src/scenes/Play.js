@@ -82,19 +82,6 @@ class Play extends Phaser.Scene{
 
         // adjust world bounds
         this.physics.world.setBounds(0,0, this.background1.width, this.background1.height, false, true, true, true);
-
-        // create sammy's wiggle animation
-        this.anims.create({
-            key: 'wiggle',
-            frames: this.anims.generateFrameNames('sprites', {
-                prefix: 'Sammy',
-                start: 1,
-                end: 2,
-                zeroPad: 0,
-            }),
-            frameRate: 8,
-            repeat: -1,               // he will wiggle forever
-        });
         
         // play sammy's wiggle
         this.player.anims.play('wiggle', true);
@@ -187,7 +174,7 @@ class Play extends Phaser.Scene{
         this.difficultyTimer.destroy();
         // play a death/game over sound
         this.sound.play('sfx-ded');
-        
+
         // play a death animation
         this.player.destroy();
 
