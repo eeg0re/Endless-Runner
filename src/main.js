@@ -7,6 +7,7 @@
 // UI sound effect is by Lesiakower on Pixabay, https://pixabay.com/sound-effects/search/8-bit/
 // Game Over sound effect is by Pixabay, https://pixabay.com/sound-effects/search/game-over/ 
 // Jump sound effect by Pixabay, https://pixabay.com/sound-effects/search/8-bit%20jump/
+// Menu scene music is "beam" by sinneschlösen on Pixabay, https://pixabay.com/music/search/8bit/ 
 
 "use strict"
 
@@ -14,7 +15,7 @@ let config = {
     type: Phaser.AUTO,
     width: 480,
     height: 320,
-    scene: [ Load, Menu, Play, GameOver ],
+    scene: [ Load, Menu, Credits, Play, GameOver ],
     render: {
         pixelArt: true      
     },
@@ -31,4 +32,5 @@ let game = new Phaser.Game(config);
 
 let cursors;
 let { height, width } = game.config;
+let menuSongIsPlaying = false;
 let songIsPlaying = false;

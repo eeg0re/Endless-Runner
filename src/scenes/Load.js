@@ -29,7 +29,8 @@ class Load extends Phaser.Scene{
 
         // load sounds
         this.load.audio('gameMusic', '8-bit-surf.mp3');
-        this.load.audio('sfx-UI', 'coin-collect-retro-8-bit-sound-effect-145251.mp3')
+        this.load.audio('menuMusic', 'sinnesloschen-beam-117362.mp3');
+        this.load.audio('sfx-UI', 'coin-collect-retro-8-bit-sound-effect-145251.mp3');
         this.load.audio('sfx-ded', 'ded.wav');
         this.load.audio('sfx-jump', 'sfx_jump_07-80241.mp3');
         this.load.audio('sfx-GO', 'failure-1-89170.mp3');

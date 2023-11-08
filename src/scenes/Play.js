@@ -124,13 +124,9 @@ class Play extends Phaser.Scene{
                 this.jumps = this.MAXJUMPS;
                 this.jumping = false;
             }
-            else{ 
-                //this.sound.play('sfx-jump');
-            }
             if(this.jumps > 0 && Phaser.Input.Keyboard.DownDuration(this.cursors.space, 150)){
                 this.player.body.velocity.y = this.JUMPVELOCITY;
                 this.jumping = true;
-                //this.sound.play('sfx-jump');
             }
             if(this.jumping && Phaser.Input.Keyboard.UpDuration(this.cursors.space, 50)){
                 this.jumps--;
@@ -140,7 +136,6 @@ class Play extends Phaser.Scene{
 
             // check for slug/bird collisions
             this.physics.world.collide(this.player, this.birdGroup, ()=>{
-                // this.player.anims.play('dead');
                 this.playerDeath();   
             }, null, this);
 
