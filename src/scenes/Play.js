@@ -187,6 +187,7 @@ class Play extends Phaser.Scene{
         this.difficultyTimer.destroy();
         // play a death/game over sound
         this.sound.play('sfx-ded');
+        
         // play a death animation
         this.player.destroy();
 
