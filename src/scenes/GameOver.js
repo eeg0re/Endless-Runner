@@ -21,6 +21,7 @@ class GameOver extends Phaser.Scene{
                 bottom: 5,
             },
         }
+        this.sound.play('sfx-GO');
 
         this.add.text(game.config.width/6, 60, 'GAME OVER', goConfig);
         this.add.text(game.config.width/4, 200, 'Press Space to Restart', goConfig);

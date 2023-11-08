@@ -48,9 +48,6 @@ class Play extends Phaser.Scene{
         }
         this.playerTime = this.add.text(10, 10, `TIME: ${this.timer}` , timeConfig);
 
-        // play background music
-
-
         // add player
         this.player = this.physics.add.sprite(20, 272, 'sprites', 'Sammy1');
         // add physics to the player
@@ -124,28 +121,28 @@ class Play extends Phaser.Scene{
             // jumping code inspired/copied from Movement Studies repo: https://github.com/nathanaltice/MovementStudies/blob/master/scenes/VariableJump.js
             this.player.isGrounded = this.player.body.touching.down;
             if(this.player.isGrounded){
-                //this.player.anims.play('wiggle');
                 this.jumps = this.MAXJUMPS;
                 this.jumping = false;
-                //this.sound.play('sfx-jump');
             }
             else{ 
-                //this.player.anims.play('wiggle');
+                //this.sound.play('sfx-jump');
             }
             if(this.jumps > 0 && Phaser.Input.Keyboard.DownDuration(this.cursors.space, 150)){
-                //this.player.anims.play('jump');
                 this.player.body.velocity.y = this.JUMPVELOCITY;
                 this.jumping = true;
-                
+                //this.sound.play('sfx-jump');
             }
             if(this.jumping && Phaser.Input.Keyboard.UpDuration(this.cursors.space, 50)){
-                //this.player.anims.play('jump');
                 this.jumps--;
                 this.jumping = false;
+                this.sound.play('sfx-jump');
             }
 
             // check for slug/bird collisions
-            this.physics.world.collide(this.player, this.birdGroup, this.playerDeath, null, this);
+            this.physics.world.collide(this.player, this.birdGroup, ()=>{
+                // this.player.anims.play('dead');
+                this.playerDeath();   
+            }, null, this);
 
             if(this.player.x < -16){
                 this.playerDeath();
@@ -169,7 +166,7 @@ class Play extends Phaser.Scene{
     }
 
     playerDeath(){
-        this.player.anims.play('dead', true);
+        //this.player.anims.play('dead', true);
         this.player.eaten = true;
         this.difficultyTimer.destroy();
         // play a death/game over sound
