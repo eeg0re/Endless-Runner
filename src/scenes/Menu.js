@@ -50,7 +50,7 @@ class Menu extends Phaser.Scene{
         // press space to play the game
         if(this.cursors.space.isDown){
             menuSongIsPlaying = false;
-            this.sound.removeByKey('menuMusic');
+            //this.sound.removeByKey('menuMusic');
             this.menuSong.stop();
             this.sound.play('sfx-UI');
             this.scene.start('playScene');
@@ -58,6 +58,8 @@ class Menu extends Phaser.Scene{
 
         // press up to view credits
         if(this.cursors.up.isDown){
+            menuSongIsPlaying = false;
+            this.menuSong.stop();
             this.sound.play('sfx-UI');
             this.scene.start('creditScene');
         }
