@@ -59,7 +59,7 @@ class Menu extends Phaser.Scene{
         // press up to view credits
         if(this.cursors.up.isDown){
             menuSongIsPlaying = false;
-            this.menuSong.stop();
+            this.menuSong.stop(); 
             this.sound.play('sfx-UI');
             this.scene.start('creditScene');
         }
