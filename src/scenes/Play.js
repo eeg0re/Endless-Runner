@@ -81,7 +81,7 @@ class Play extends Phaser.Scene{
         this.physics.world.setBounds(0,0, this.background1.width, this.background1.height, false, true, true, true);
         
         // play sammy's wiggle
-        this.player.anims.play('wiggle', true);
+        //this.player.anims.play('wiggle', true);
 
         // play the song only if it isn't already playing
         this.gameSong = this.sound.add('gameMusic');
@@ -123,6 +123,7 @@ class Play extends Phaser.Scene{
             if(this.player.isGrounded){
                 this.jumps = this.MAXJUMPS;
                 this.jumping = false;
+                this.player.play('wiggle', true);
             }
             if(this.jumps > 0 && Phaser.Input.Keyboard.DownDuration(this.cursors.space, 150)){
                 this.player.body.velocity.y = this.JUMPVELOCITY;
@@ -134,9 +135,15 @@ class Play extends Phaser.Scene{
                 this.sound.play('sfx-jump');
             }
 
+            if (this.jumping){
+                this.player.play('jump', true);
+            }
+
+
+
             // check for slug/bird collisions
             this.physics.world.collide(this.player, this.birdGroup, ()=>{
-                this.playerDeath();   
+                this.playerDeath();
             }, null, this);
 
             if(this.player.x < -16){
@@ -161,18 +168,19 @@ class Play extends Phaser.Scene{
     }
 
     playerDeath(){
-        //this.player.anims.play('dead', true);
+        this.player.anims.play('dead', true);
         this.player.eaten = true;
         this.difficultyTimer.destroy();
         // play a death/game over sound
         this.sound.play('sfx-ded');
 
-        // play a death animation
-        this.player.destroy();
+        // play a death animatio
 
         this.gameSong.stop();
         songIsPlaying = false;
-        this.time.delayedCall(2000, ()=> { this.scene.start('GameOverScene');});
+        this.time.delayedCall(2000, ()=> { 
+            this.player.destroy();
+            this.scene.start('GameOverScene');});
     }
 
 }
