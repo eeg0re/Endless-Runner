@@ -5,7 +5,7 @@ class Play extends Phaser.Scene{
 
     create(){
         // reset game parameters 
-        this.birdVelocity = -250; // start real easy
+        this.birdVelocity = -175; // start real easy
         this.birdMaxVelocity = -1000;
         this.rockVel = -150;
         this.timer = 0;
@@ -168,7 +168,7 @@ class Play extends Phaser.Scene{
 
             if(this.timer % 5 == 0){ // every 5 seconds increase speed by 50 pixels 
                 if(this.birdVelocity >= this.birdMaxVelocity){
-                    this.birdVelocity -= 50;
+                    this.birdVelocity -= 40;
                 }
             }
         }
