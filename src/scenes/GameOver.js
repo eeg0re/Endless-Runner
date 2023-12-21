@@ -10,22 +10,12 @@ class GameOver extends Phaser.Scene{
     create(){
         this.screen = this.add.tileSprite(0,0, game.config.width, game.config.height, 'gameOver').setOrigin(0,0);
         this.cursors = this.input.keyboard.createCursorKeys();  // redefine cursors one last time
-        let goConfig = {
-            fontFamily: 'Courier',
-            fontSize: '22px',
-            backgroundColor: '#424e7a',
-            color: '#f0f1f5',
-            align: 'center',
-            padding: {
-                top: 5,
-                bottom: 5,
-            },
-        }
         this.sound.play('sfx-GO');
 
-        this.add.text(game.config.width/6, 60, 'GAME OVER', goConfig);
-        this.add.text(game.config.width/4, 200, 'Press Space to Restart', goConfig);
-        this.add.text(game.config.width/6, 250, 'Press \"up\" for the main menu', goConfig);
+        this.add.bitmapText(width/2, height/2, 'menu-font', 'GAME OVER').setOrigin(0.5).setScale(0.5);
+        this.add.bitmapText(width/2, (height/2 + 60), 'menu-font', `You survived: ${player_time} sec.`).setOrigin(0.5).setScale(0.3);
+        this.add.bitmapText(width/2, (height/2 + 100), 'menu-font', 'Press Space to Restart').setOrigin(0.5).setScale(0.3);
+        this.add.bitmapText(width/2, (height/2 + 140), 'menu-font', 'Press up for the main menu').setOrigin(0.5).setScale(0.3);
     }
 
     update(){

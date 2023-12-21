@@ -37,3 +37,4 @@ let cursors;
 let { height, width } = game.config;
 let menuSongIsPlaying = false;
 let songIsPlaying = false;
+let player_time; 

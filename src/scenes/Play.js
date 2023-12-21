@@ -166,7 +166,7 @@ class Play extends Phaser.Scene{
         if(!this.player.eaten){
             this.timer++;
 
-            if(this.timer % 5 == 0){ // every 5 seconds increase speed by 50 pixels 
+            if(this.timer % 5 == 0){ // every 5 seconds increase speed by 40 pixels 
                 if(this.birdVelocity >= this.birdMaxVelocity){
                     this.birdVelocity -= 40;
                 }
@@ -178,10 +178,13 @@ class Play extends Phaser.Scene{
         this.player.anims.play('dead', true);
         this.player.eaten = true;
         this.difficultyTimer.destroy();
+
+        player_time = this.timer;
+        
         // play a death/game over sound
         this.sound.play('sfx-ded');
 
-        // play a death animatio
+        // play a death animation
 
         this.gameSong.stop();
         songIsPlaying = false;
