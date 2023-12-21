@@ -3,14 +3,11 @@ class Play extends Phaser.Scene{
         super("playScene");
     }
 
-    preload(){
-
-    }
-
     create(){
         // reset game parameters 
         this.birdVelocity = -250; // start real easy
         this.birdMaxVelocity = -1000;
+        this.rockVel = -150;
         this.timer = 0;
         
         // define constants
@@ -62,10 +59,16 @@ class Play extends Phaser.Scene{
             runChildUpdate: true
         });
 
+        this.rockGroup = this.add.group({
+            runChildUpdate: true
+        })
+
         // delay the bird spawn
         this.time.delayedCall(4000, ()=> {
             this.addBird();
         });
+
+        this.addRock();
         
         this.difficultyTimer = this.time.addEvent({
             delay: 1000,                            // every second
@@ -76,12 +79,11 @@ class Play extends Phaser.Scene{
 
         // add player/tile collision
         this.physics.add.collider(this.player, this.dirtTiles);
+        this.physics.add.collider(this.player, this.rockGroup);
 
         // adjust world bounds
         this.physics.world.setBounds(0,0, this.background1.width, this.background1.height, false, true, true, true);
         
-        // play sammy's wiggle
-        //this.player.anims.play('wiggle', true);
 
         // play the song only if it isn't already playing
         this.gameSong = this.sound.add('gameMusic');
@@ -97,6 +99,11 @@ class Play extends Phaser.Scene{
         let speedVariance = Phaser.Math.Between(0, 50);
         let birb = new Bird(this, this.birdVelocity - speedVariance);
         this.birdGroup.add(birb);
+    }
+
+    addRock(){
+        let rock = new Rock(this, this.rockVel);
+        this.rockGroup.add(rock);
     }
 
     update(){

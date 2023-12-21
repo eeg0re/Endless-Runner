@@ -3,10 +3,6 @@ class Menu extends Phaser.Scene{
         super("menuScene");
     }
 
-    preload(){
-
-    }
-
     create(){
 
         this.mountain = this.add.tileSprite(0,0, game.config.width, game.config.height, 'mountains').setOrigin(0,0);
@@ -29,7 +25,6 @@ class Menu extends Phaser.Scene{
         // press space to play the game
         if(this.cursors.space.isDown){
             menuSongIsPlaying = false;
-            //this.sound.removeByKey('menuMusic');
             this.menuSong.stop();
             this.sound.play('sfx-UI');
             this.scene.start('playScene');

@@ -25,7 +25,7 @@ class Bird extends Phaser.GameObjects.Sprite{
         this.body.setImmovable();
         this.body.setAllowGravity(false);
         this.anims.play('flap', true);
-        this.newBird = true;        
+        this.newBird = true;
     }
 
     update(){
