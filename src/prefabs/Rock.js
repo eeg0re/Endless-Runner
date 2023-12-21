@@ -17,7 +17,7 @@ class Rock extends Phaser.GameObjects.Sprite{
             this.parentScene.addRock();
             this.newRock = false;
         }
-        // destroy the bird when it reaches past the edge of the screen
+        // destroy the rock  when it reaches past the edge of the screen
         if(this.x < -(this.width - 32)){
             this.destroy();
         }
