@@ -8,33 +8,12 @@ class Menu extends Phaser.Scene{
     }
 
     create(){
-        let menuConfig = {
-            fontFamily: 'Courier',
-            fontSize: '28px',
-            backgroundColor: '#424e7a',
-            color: '#f0f1f5',
-            align: 'center',
-            padding: {
-                top: 5,
-                bottom: 5,
-            },
-        }
-        let controlConfig = {
-            fontFamily: 'Courier',
-            fontSize: '16px',
-            backgroundColor: '#424e7a',
-            color: '#f0f1f5',
-            align: 'center',
-            padding: {
-                top: 5,
-                bottom: 5,
-            },
-        }
+
         this.mountain = this.add.tileSprite(0,0, game.config.width, game.config.height, 'mountains').setOrigin(0,0);
-        this.add.text(game.config.width/12, game.config.height/4, 'Sammy Slug Forest Escape', menuConfig);
-        this.add.text(game.config.width/7, game.config.height/2, 'Press space to start', menuConfig);
-        this.add.text(game.config.width/7, (game.config.height/2)+50, 'Press up for credits', menuConfig);
-        this.add.text(game.config.width/7, (game.config.height/2) + 100, 'Move with <- and -> Jump with space', controlConfig);
+        this.add.bitmapText(game.config.width/2, game.config.height/4, 'menu-font', 'Sammy Slug Forest Escape').setOrigin(0.5).setScale(0.5);
+        this.add.bitmapText(game.config.width/2,(game.config.height/2), 'menu-font', 'Move with arrows, jump with SPACE').setOrigin(0.5).setScale(0.3);
+        this.add.bitmapText(game.config.width/2, game.config.height/2 + 50, 'menu-font', 'Press UP for credits').setOrigin(0.5).setScale(0.3);
+        this.add.bitmapText(game.config.width/2,(game.config.height/2)+100, 'menu-font', 'Press SPACE to start').setOrigin(0.5).setScale(0.5);
 
         //play menu song
         this.menuSong = this.sound.add('menuMusic');

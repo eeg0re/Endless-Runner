@@ -19,7 +19,7 @@ class Load extends Phaser.Scene{
             loading.destroy();
         });
 
-        // load all other assets
+        // load images
         this.load.path = './assets/';           // set the load path
         this.load.image('mountains', 'mountains.png');
         this.load.image('gameOver', 'game-over.png');
@@ -32,8 +32,12 @@ class Load extends Phaser.Scene{
         this.load.audio('menuMusic', 'sinnesloschen-beam-117362.mp3');
         this.load.audio('sfx-UI', 'coin-collect-retro-8-bit-sound-effect-145251.mp3');
         this.load.audio('sfx-ded', 'ded.wav');
-        this.load.audio('sfx-jump', 'sfx_jump_07-80241.mp3');
+        this.load.audio('sfx-jump', 'jump.wav');
         this.load.audio('sfx-GO', 'failure-1-89170.mp3');
+
+        // load bitmap font
+        this.load.bitmapFont('menu-font', 'endless-font.png', 'endless-font.xml');
+
     }
 
     create(){
